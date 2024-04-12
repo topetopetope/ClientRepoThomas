@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "Summary";
+    Layout = null;
+
+    string hostName = Environment.GetEnvironmentVariable("HOSTNAME") ?? "(Unknown)";
+    string podIP = Environment.GetEnvironmentVariable("MY_POD_IP") ?? "(Unknown)";
+
+    //For debuggging
+    //if (DateTime.Now.Second % 2 == 0)
+    //    hostName = "myapp-7b6d8b5fc8-nvwc2";
+    //else
+    //    hostName = "myapp-7b6d8b5fc8-nvwc3";
+
+    //var colors = new string[] {"silver", "grey", "maroon", "red", "purple","green", "yellow","teal", "lime", "pink", "gold", "brown", "magenta", "white", "maroon"};
+
+    var strTohash = hostName + podIP;
+    var strHash = Math.Abs(strTohash.GetHashCode());
+
+    var hash = (strHash % 255*255*255);
+    //string color = colors[hash];
+    
+    var hexColor = hash.ToString("X");
+
+
+    var time = DateTime.Now.ToString("HH:mm:ss");
+}
+<body style="background-color:#@hexColor;">
+
+<h1>Summary</h1>
+<h2>
+<pre>
+Hostname: @hostName<br />
+Pod IP  : @podIP
+Time    : @time
+</pre>
+
+
+</h2>
+
+</body>
